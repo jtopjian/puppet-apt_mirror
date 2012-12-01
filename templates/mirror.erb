@@ -1,0 +1,8 @@
+# mirror <%= name %>
+deb http://<%= mirror -%>/<%= os -%> <%= release -%> <%= components.join(' ') -%>
+
+<% if source -%>
+deb http://<%= mirror -%>/<%= os -%> <%= release -%> <%= components.join(' ') -%>
+<% end -%>
+
+
