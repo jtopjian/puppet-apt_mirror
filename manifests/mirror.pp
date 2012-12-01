@@ -1,5 +1,5 @@
 #
-define apt-mirror::mirror (
+define apt_mirror::mirror (
   $mirror,
   $os         = 'ubuntu',
   $release    = ['precise'],
@@ -9,7 +9,7 @@ define apt-mirror::mirror (
 
   concat::fragment { $name:
     target  => '/etc/apt/mirror.list',
-    content => template('apt-mirror/mirror.erb'),
+    content => template('apt_mirror/mirror.erb'),
     order   => '02',
   }
 

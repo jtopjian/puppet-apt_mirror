@@ -1,5 +1,5 @@
 #
-class apt-mirror (
+class apt_mirror (
   $ensure    = present,
   $enabled   = true,
   $base_path = '/var/spool/apt-mirror',
@@ -21,7 +21,7 @@ class apt-mirror (
 
   concat::fragment { 'mirror.list header':
     target  => '/etc/apt/mirror.list',
-    content => template('apt-mirror/header.erb'),
+    content => template('apt_mirror/header.erb'),
     order   => '01',
   }
 
