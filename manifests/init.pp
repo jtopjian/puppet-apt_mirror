@@ -28,7 +28,7 @@ class apt_mirror (
   cron { 'apt-mirror':
     ensure  => $enabled ? { false => absent, default => present },
     user    => 'root',
-    command => '/usr/bin/apt-mirror /etc/apt/apt-mirror.list',
+    command => '/usr/bin/apt-mirror /etc/apt/mirror.list',
     minute  => 0,
     hour    => 4,
   }
