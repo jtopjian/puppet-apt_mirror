@@ -1,17 +1,15 @@
 ############# config ##################
 ##
-## set base_path    /var/spool/apt-mirror
-##
-## set mirror_path  $base_path/mirror
-## set skel_path    $base_path/skel
-## set var_path     $base_path/var
-## set cleanscript $var_path/clean.sh
-## set defaultarch  <running host architecture>
-## set postmirror_script $var_path/postmirror.sh
-## set run_postmirror 0
-set base_path <%= base_path %>
-set nthreads <%= nthreads %> 
-set _tilde <%= tilde %>
+set base_path <%= @base_path %>
+set skel_path    $base_path/skel
+set mirror_path  <%= @mirror_path %>
+set var_path <%= @var_path %>
+set defaultarch <%= @defaultarch %>
+set cleanscript <%= @cleanscript %>
+set postmirror_script <%= @postmirror_script %>
+set run_postmirror <%= @run_postmirror %>
+set nthreads <%= @nthreads %> 
+set _tilde <%= @tilde %>
 ##
 ############## end config ##############
 
