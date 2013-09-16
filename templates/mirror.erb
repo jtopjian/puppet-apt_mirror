@@ -1,8 +1,10 @@
-# mirror <%= name %>
-deb http://<%= mirror -%>/<%= os -%> <%= release -%> <%= components.join(' ') -%>
+# File managed by Puppet
+<% @release.each do |r| -%>
+# mirror <%= @name %>-<%= r %>
+deb http://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 
-<% if source -%>
-deb http://<%= mirror -%>/<%= os -%> <%= release -%> <%= components.join(' ') -%>
+<% if @source -%>
+deb http://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 <% end -%>
-
+<% end -%>
 
