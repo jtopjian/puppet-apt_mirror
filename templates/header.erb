@@ -9,8 +9,20 @@ set defaultarch <%= @defaultarch %>
 set cleanscript <%= @cleanscript %>
 set postmirror_script <%= @postmirror_script %>
 set run_postmirror <%= @run_postmirror %>
-set nthreads <%= @nthreads %> 
+set nthreads <%= @nthreads %>
 set _tilde <%= @tilde %>
+<% if @wget_limit_rate -%>
+set limit_rate <%= @wget_limit_rate %>
+<% end -%>
+<% if @wget_auth_no_challenge -%>
+set auth_no_challenge 1
+<% end -%>
+<% if @wget_no_check_certificate -%>
+set no_check_certificate 1
+<% end -%>
+<% if @wget_unlink -%>
+set unlink 1
+<% end -%>
 ##
 ############## end config ##############
 
