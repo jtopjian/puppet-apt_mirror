@@ -117,8 +117,6 @@ class apt_mirror (
   $wget_unlink               = false
 ) {
 
-  include concat::setup
-
   package { 'apt-mirror':
     ensure => $ensure,
   }
