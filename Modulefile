@@ -1,5 +1,5 @@
 name 'jtopjian-apt_mirror'
-version '1.0.1'
+version '1.0.2'
 source 'git://github.com/jtopjian/puppet-apt_mirror.git'
 author 'jtopjian'
 license 'Apache 2.0'
