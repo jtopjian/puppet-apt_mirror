@@ -1,9 +1,17 @@
 <% @release.each do |r| -%>
 # mirror <%= @name %>-<%= r %>
+<% if @mirror.include?('://') -%>
+deb <%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
+<% else -%>
 deb http://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
+<% end -%>
 
 <% if @source -%>
+<% if @mirror.include?('://') -%>
+deb <%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
+<% else -%>
 deb http://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
+<% end -%>
 <% end -%>
 <% end -%>
 
