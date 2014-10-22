@@ -7,7 +7,7 @@ describe 'apt_mirror::mirror' do
       :os         => 'ubuntu',
       :release    => ['precise'],
       :components => ['main', 'contrib', 'non-free'],
-      :source     => 'false',
+      :source     => 'true',
     }
   end
 
@@ -34,6 +34,7 @@ describe 'apt_mirror::mirror' do
 
     it do
       should contain_file("#{fragdir}/fragments/02_#{safe_name}").with_content(/deb http:\/\/#{mirror}/)
+      should contain_file("#{fragdir}/fragments/02_#{safe_name}").with_content(/deb-src http:\/\/#{mirror}/)
     end
 
   end
@@ -61,6 +62,7 @@ describe 'apt_mirror::mirror' do
 
     it do
       should contain_file("#{fragdir}/fragments/02_#{safe_name}").with_content(/deb #{mirror}/)
+      should contain_file("#{fragdir}/fragments/02_#{safe_name}").with_content(/deb-src #{mirror}/)
     end
 
   end
