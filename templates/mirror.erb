@@ -8,9 +8,9 @@ deb http://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 
 <% if @source -%>
 <% if @mirror.include?('://') -%>
-deb <%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
+deb-src <%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 <% else -%>
-deb http://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
+deb-src http://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 <% end -%>
 <% end -%>
 <% end -%>
