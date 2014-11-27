@@ -38,7 +38,6 @@
 #
 # Default: undef
 #
-
 define apt_mirror::mirror (
   $mirror,
   $os         = 'ubuntu',
