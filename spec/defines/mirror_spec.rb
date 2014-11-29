@@ -8,6 +8,7 @@ describe 'apt_mirror::mirror' do
       :release    => ['precise'],
       :components => ['main', 'contrib', 'non-free'],
       :source     => 'true',
+      :alt_arch   => ['i386'],
     }
   end
 
@@ -32,10 +33,9 @@ describe 'apt_mirror::mirror' do
       })
     end
 
-    it do
-      should contain_file("#{fragdir}/fragments/02_#{safe_name}").with_content(/deb http:\/\/#{mirror}/)
-      should contain_file("#{fragdir}/fragments/02_#{safe_name}").with_content(/deb-src http:\/\/#{mirror}/)
-    end
+    it {  should contain_file("#{fragdir}/fragments/02_#{safe_name}").with_content(/deb http:\/\/#{mirror}/) }
+    it {  should contain_file("#{fragdir}/fragments/02_#{safe_name}").with_content(/deb-src http:\/\/#{mirror}/) }
+    it {  should contain_file("#{fragdir}/fragments/02_#{safe_name}").with_content(/deb-i386 http:\/\/#{mirror}/) }
 
   end
 
@@ -60,10 +60,9 @@ describe 'apt_mirror::mirror' do
       })
     end
 
-    it do
-      should contain_file("#{fragdir}/fragments/02_#{safe_name}").with_content(/deb #{mirror}/)
-      should contain_file("#{fragdir}/fragments/02_#{safe_name}").with_content(/deb-src #{mirror}/)
-    end
+    it { should contain_file("#{fragdir}/fragments/02_#{safe_name}").with_content(/deb #{mirror}/) }
+    it { should contain_file("#{fragdir}/fragments/02_#{safe_name}").with_content(/deb-src #{mirror}/) }
+    it { should contain_file("#{fragdir}/fragments/02_#{safe_name}").with_content(/deb-i386 #{mirror}/) }
 
   end
 
