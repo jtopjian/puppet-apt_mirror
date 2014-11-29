@@ -6,6 +6,16 @@ deb <%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 deb http://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 <% end -%>
 
+<% if @alt_arch -%>
+<% @alt_arch.each do |aa| -%>
+<% if @mirror.include?('://') -%>
+deb-<%= aa -%> <%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
+<% else -%>
+deb-<%= aa -%> http://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
+<% end -%>
+<% end -%>
+<% end -%>
+
 <% if @source -%>
 <% if @mirror.include?('://') -%>
 deb-src <%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
