@@ -122,9 +122,10 @@ class apt_mirror (
   }
 
   concat { '/etc/apt/mirror.list':
-    owner => 'root',
-    group => 'root',
-    mode  => '0644',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    before => Cron['apt-mirror'],
   }
 
   concat::fragment { 'mirror.list header':
