@@ -114,7 +114,8 @@ class apt_mirror (
   $wget_limit_rate           = undef,
   $wget_auth_no_challenge    = false,
   $wget_no_check_certificate = false,
-  $wget_unlink               = false
+  $wget_unlink               = false,
+  $mirror_list               = {}
 ) {
 
   package { 'apt-mirror':
@@ -142,4 +143,5 @@ class apt_mirror (
     hour    => 4,
   }
 
+  create_resources('apt_mirror::mirror', $mirror_list)
 }
