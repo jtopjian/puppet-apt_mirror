@@ -3,7 +3,7 @@
 <% if @mirror.include?('://') -%>
 deb <%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 <% else -%>
-deb http://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
+deb http<%- if @ssl -%>s<%- end -%>://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 <% end -%>
 
 <% if @alt_arch -%>
@@ -11,7 +11,7 @@ deb http://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 <% if @mirror.include?('://') -%>
 deb-<%= aa -%> <%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 <% else -%>
-deb-<%= aa -%> http://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
+deb-<%= aa -%> http<%- if @ssl -%>s<%- end -%>://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 <% end -%>
 <% end -%>
 <% end -%>
@@ -20,7 +20,7 @@ deb-<%= aa -%> http://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join
 <% if @mirror.include?('://') -%>
 deb-src <%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 <% else -%>
-deb-src http://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
+deb-src http<%- if @ssl -%>s<%- end -%>://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 <% end -%>
 <% end -%>
 <% end -%>

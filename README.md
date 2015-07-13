@@ -14,3 +14,15 @@ apt_mirror::mirror { 'puppetlabs':
 }
 ```
 
+For hiera:
+
+```hiera
+apt_mirror::mirror_list:
+  'puppetlabs':
+    mirror:     'apt.puppetlabs.com'
+    os:         ''
+    release:
+      - 'precise'
+    components: 
+      - 'main'
+```
