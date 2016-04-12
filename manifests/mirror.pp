@@ -32,6 +32,12 @@
 #
 # Default: false
 #
+# [*clean*]
+#
+# Clean mirror. Boolean, true|false
+#
+# Default: false
+#
 # [*alt_arch*]
 #
 # Array of alternate architectures to include in mirror. ( e.g. [ 'i386', 'armel', 'powerpc', ] )
@@ -44,6 +50,7 @@ define apt_mirror::mirror (
   $release    = ['precise'],
   $components = ['main', 'contrib', 'non-free'],
   $source     = false,
+  $clean      = false,
   $alt_arch   = undef,
   $ssl        = false,
 ) {

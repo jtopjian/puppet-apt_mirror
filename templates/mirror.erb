@@ -1,11 +1,11 @@
 <% @release.each do |r| -%>
+
 # mirror <%= @name %>-<%= r %>
 <% if @mirror.include?('://') -%>
 deb <%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 <% else -%>
 deb http<%- if @ssl -%>s<%- end -%>://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 <% end -%>
-
 <% if @alt_arch -%>
 <% @alt_arch.each do |aa| -%>
 <% if @mirror.include?('://') -%>
@@ -15,7 +15,6 @@ deb-<%= aa -%> http<%- if @ssl -%>s<%- end -%>://<%= @mirror -%>/<%= @os -%> <%=
 <% end -%>
 <% end -%>
 <% end -%>
-
 <% if @source -%>
 <% if @mirror.include?('://') -%>
 deb-src <%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
@@ -23,5 +22,8 @@ deb-src <%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 deb-src http<%- if @ssl -%>s<%- end -%>://<%= @mirror -%>/<%= @os -%> <%= r -%> <%= @components.join(' ') %>
 <% end -%>
 <% end -%>
+<% if @clean -%>
+clean <%= @mirror -%>
 <% end -%>
 
+<% end -%>
