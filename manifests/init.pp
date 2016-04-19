@@ -135,12 +135,25 @@ class apt_mirror (
     order   => '01',
   }
 
+  $cron_ensure = $enabled ? {
+    false   => absent,
+    default => present,
+  }
+
   cron { 'apt-mirror':
-    ensure  => $enabled ? { false => absent, default => present },
+    ensure  => $cron_ensure,
     user    => 'root',
     command => '/usr/bin/apt-mirror /etc/apt/mirror.list',
     minute  => 0,
     hour    => 4,
+  }
+
+  cron { 'apt-mirror-clean':
+    ensure  => $cron_ensure,
+    user    => 'root',
+    command => $cleanscript,
+    minute  => 0,
+    hour    => 6,
   }
 
   create_resources('apt_mirror::mirror', $mirror_list)
