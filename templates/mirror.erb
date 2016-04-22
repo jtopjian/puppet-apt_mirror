@@ -25,3 +25,11 @@ deb-src http<%- if @ssl -%>s<%- end -%>://<%= @mirror -%>/<%= @os -%> <%= r -%> 
 <% end -%>
 <% end -%>
 
+<% if @clean -%>
+<% if @mirror.include?('://') -%>
+clean <%= @mirror -%>
+<% else -%>
+clean http<%- if @ssl -%>s<%- end -%>://<%= @mirror -%>
+<% end %>
+<% end -%>
+

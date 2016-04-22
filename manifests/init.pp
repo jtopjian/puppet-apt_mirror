@@ -40,6 +40,12 @@
 #
 # Default: $var_path/clean.sh
 #
+# [*autoclean*]
+#
+# Whether or not to clean up repos automatically
+#
+# Default: false
+#
 # [*postmirror_script*]
 #
 # Script to be executed for post mirroring tasks.
@@ -107,6 +113,7 @@ class apt_mirror (
   $var_path                  = '$base_path/var',
   $defaultarch               = $::architecture,
   $cleanscript               = '$var_path/clean.sh',
+  $autoclean                 = false,
   $postmirror_script         = '$var_path/postmirror.sh',
   $run_postmirror            = 0,
   $nthreads                  = 20,
