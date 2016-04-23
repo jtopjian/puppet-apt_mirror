@@ -38,6 +38,12 @@
 #
 # Default: undef
 #
+# [*clean*]
+#
+# Whether or not to enable deleting old files for this repository
+#
+# Default: false
+#
 define apt_mirror::mirror (
   $mirror,
   $os         = 'ubuntu',
@@ -46,6 +52,7 @@ define apt_mirror::mirror (
   $source     = false,
   $alt_arch   = undef,
   $ssl        = false,
+  $clean      = false,
 ) {
 
   concat::fragment { $name:
