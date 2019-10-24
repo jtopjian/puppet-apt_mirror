@@ -103,6 +103,7 @@
 # == Requires
 #
 # puppetlabs-concat
+# puppet-cron
 #
 # == Examples
 #
@@ -140,7 +141,7 @@ class apt_mirror (
     owner  => 'root',
     group  => 'root',
     mode   => '0644',
-    before => Cron['apt-mirror'],
+    before => Cron::Job['apt-mirror'],
   }
 
   concat::fragment { 'mirror.list header':
@@ -159,13 +160,19 @@ class apt_mirror (
     default => [ "http_proxy=${proxy_url}", "https_proxy=${proxy_url}"],
   }
 
-  cron { 'apt-mirror':
+  cron::job { 'apt-mirror':
     ensure      => $cron_ensure_real,
     user        => 'root',
     command     => '/usr/bin/apt-mirror /etc/apt/mirror.list',
     minute      => 0,
     hour        => 4,
     environment => $proxy_url_real,
+  }
+
+  # remove legacy cron job
+  # we use now cron::job
+  cron { 'apt-mirror':
+    ensure => absent,
   }
 
   create_resources('apt_mirror::mirror', $mirror_list)
