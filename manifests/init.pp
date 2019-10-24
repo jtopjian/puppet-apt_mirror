@@ -149,13 +149,23 @@ class apt_mirror (
     order   => '01',
   }
 
+  $cron_ensure_real = $enabled ? {
+    false   => absent,
+    default => present,
+  }
+
+  $proxy_url_real = $proxy_url ? {
+    undef   => undef,
+    default => [ "http_proxy=${proxy_url}", "https_proxy=${proxy_url}"],
+  }
+
   cron { 'apt-mirror':
-    ensure  => $enabled ? { false => absent, default => present },
-    user    => 'root',
-    command => '/usr/bin/apt-mirror /etc/apt/mirror.list',
-    minute  => 0,
-    hour    => 4,
-    environment => $proxy_url ? { undef => undef, default => [ "http_proxy=${proxy_url}", "https_proxy=${proxy_url}"] },
+    ensure      => $cron_ensure_real,
+    user        => 'root',
+    command     => '/usr/bin/apt-mirror /etc/apt/mirror.list',
+    minute      => 0,
+    hour        => 4,
+    environment => $proxy_url_real,
   }
 
   create_resources('apt_mirror::mirror', $mirror_list)
