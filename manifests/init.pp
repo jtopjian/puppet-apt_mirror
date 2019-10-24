@@ -94,6 +94,12 @@
 #
 # Default: false
 #
+# [*proxy_url*]
+#
+# Enable apt-mirror to mirror behind a proxy.
+#
+# Default: no proxy
+#
 # == Requires
 #
 # puppetlabs-concat
@@ -122,7 +128,8 @@ class apt_mirror (
   $wget_auth_no_challenge    = false,
   $wget_no_check_certificate = false,
   $wget_unlink               = false,
-  $mirror_list               = {}
+  $mirror_list               = {},
+  $proxy_url                 = undef,
 ) {
 
   package { 'apt-mirror':
@@ -148,6 +155,7 @@ class apt_mirror (
     command => '/usr/bin/apt-mirror /etc/apt/mirror.list',
     minute  => 0,
     hour    => 4,
+    environment => $proxy_url ? { undef => undef, default => [ "http_proxy=${proxy_url}", "https_proxy=${proxy_url}"] },
   }
 
   create_resources('apt_mirror::mirror', $mirror_list)
