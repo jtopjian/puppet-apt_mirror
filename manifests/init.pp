@@ -163,7 +163,7 @@ class apt_mirror (
   cron::job { 'apt-mirror':
     ensure      => $cron_ensure_real,
     user        => 'root',
-    command     => "/usr/bin/apt-mirror /etc/apt/mirror.list >> ${var_path}/cron.log 2>&1",
+    command     => "/usr/bin/apt-mirror /etc/apt/mirror.list >> ${base_path}/var/cron.log 2>&1",
     minute      => 0,
     hour        => 4,
     environment => $proxy_url_real,
