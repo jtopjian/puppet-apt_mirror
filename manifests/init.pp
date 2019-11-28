@@ -100,6 +100,63 @@
 #
 # Default: no proxy
 #
+# [*cron_user*]
+#
+# User to run regular mirror job.
+#
+# Default: root
+#
+# [*cron_command*]
+#
+# Command line to use for regular mirror job.
+# Helpful, if you need to configure monitoring or logging.
+# E.g.: To monitor job with check_mk, set:
+#   cron_command => '/usr/bin/mk-job my-regular-apt-mirror-job /usr/bin/apt-mirror ...'
+#
+# Default: /usr/bin/apt-mirror /etc/apt/mirror.list >> ${base_path}/var/cron.log 2>> ${base_path}/var/cron.error.log
+#
+# [*cron_minute*]
+#
+# When to run cron job.
+#
+# Default: 0
+#
+# [*cron_hour*]
+#
+# When to run cron job.
+#
+# Default: 4
+#
+# [*cron_date*]
+#
+# When to run cron job.
+#
+# Default: *
+#
+# [*cron_month*]
+#
+# When to run cron job.
+#
+# Default: *
+#
+# [*cron_weekday*]
+#
+# When to run cron job.
+#
+# Default: *
+#
+# [*cron_special*]
+#
+# When to run cron job, see https://github.com/voxpupuli/puppet-cron/blob/master/types/special.pp
+#
+# Default: undef
+#
+# [*cron_description*]
+#
+# Optional description.
+#
+# Default: undef
+#
 # == Requires
 #
 # puppetlabs-concat
@@ -131,6 +188,15 @@ class apt_mirror (
   $wget_unlink               = false,
   $mirror_list               = {},
   $proxy_url                 = undef,
+  $cron_user                 = 'root',
+  $cron_command              = "/usr/bin/apt-mirror /etc/apt/mirror.list >> ${base_path}/var/cron.log 2>> ${base_path}/var/cron.error.log",
+  $cron_minute               = 0,
+  $cron_hour                 = 4,
+  $cron_date                 = '*',
+  $cron_month                = '*',
+  $cron_weekday              = '*',
+  $cron_special              = undef,
+  $cron_description          = undef,
 ) {
 
   package { 'apt-mirror':
@@ -162,10 +228,15 @@ class apt_mirror (
 
   cron::job { 'apt-mirror':
     ensure      => $cron_ensure_real,
-    user        => 'root',
-    command     => "/usr/bin/apt-mirror /etc/apt/mirror.list >> ${base_path}/var/cron.log 2>> ${base_path}/var/cron.error.log",
-    minute      => 0,
-    hour        => 4,
+    user        => $cron_user,
+    command     => $cron_command,
+    minute      => $cron_minute,
+    hour        => $cron_hour,
+    date        => $cron_date,
+    month       => $cron_month,
+    weekday     => $cron_weekday,
+    special     => $cron_special,
+    description => $cron_description,
     environment => $proxy_url_real,
   }
 
