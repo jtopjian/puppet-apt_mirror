@@ -94,9 +94,16 @@
 #
 # Default: false
 #
+# [*proxy_url*]
+#
+# Enable apt-mirror to mirror behind a proxy.
+#
+# Default: no proxy
+#
 # == Requires
 #
 # puppetlabs-concat
+# puppet-cron
 #
 # == Examples
 #
@@ -122,7 +129,8 @@ class apt_mirror (
   $wget_auth_no_challenge    = false,
   $wget_no_check_certificate = false,
   $wget_unlink               = false,
-  $mirror_list               = {}
+  $mirror_list               = {},
+  $proxy_url                 = undef,
 ) {
 
   package { 'apt-mirror':
@@ -133,7 +141,7 @@ class apt_mirror (
     owner  => 'root',
     group  => 'root',
     mode   => '0644',
-    before => Cron['apt-mirror'],
+    before => Cron::Job['apt-mirror'],
   }
 
   concat::fragment { 'mirror.list header':
@@ -142,12 +150,29 @@ class apt_mirror (
     order   => '01',
   }
 
+  $cron_ensure_real = $enabled ? {
+    false   => absent,
+    default => present,
+  }
+
+  $proxy_url_real = $proxy_url ? {
+    undef   => undef,
+    default => [ "http_proxy=${proxy_url}", "https_proxy=${proxy_url}"],
+  }
+
+  cron::job { 'apt-mirror':
+    ensure      => $cron_ensure_real,
+    user        => 'root',
+    command     => "/usr/bin/apt-mirror /etc/apt/mirror.list >> ${base_path}/var/cron.log 2>> ${base_path}/var/cron.error.log",
+    minute      => 0,
+    hour        => 4,
+    environment => $proxy_url_real,
+  }
+
+  # remove legacy cron job
+  # we use now cron::job
   cron { 'apt-mirror':
-    ensure  => $enabled ? { false => absent, default => present },
-    user    => 'root',
-    command => '/usr/bin/apt-mirror /etc/apt/mirror.list',
-    minute  => 0,
-    hour    => 4,
+    ensure => absent,
   }
 
   create_resources('apt_mirror::mirror', $mirror_list)
